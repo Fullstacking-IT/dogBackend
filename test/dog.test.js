@@ -21,15 +21,15 @@ describe('dog routes', () => {
   it('can create a dog', () => {
     return request(app)
       .post('/api/v1/dogs')
-      .send({ 
-        name: 'Pennie', 
+      .send({
+        name: 'Pennie',
         breed: 'Doodle',
         age: '7 lbs'
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          name: 'Pennie', 
+          name: 'Pennie',
           breed: 'Doodle',
           age: '7 lbs',
           __v: expect.any(Number)
@@ -38,25 +38,57 @@ describe('dog routes', () => {
   });
 
   it('can get all dogs', async() => {
-    const dog = await Dog.create([{
-      name: 'Pennie', 
-      breed: 'Doodle',
-      age: '7 lbs'
-    },
-    {
-      name: 'Poochie', 
-      breed: 'Bloodhound',
-      age: '120 lbs'
-    }]);
+    const dog = await Dog.create([
+      {
+        name: 'Pennie',
+        breed: 'Doodle',
+        age: '7 lbs'
+      },
+      {
+        name: 'Poochie',
+        breed: 'Bloodhound',
+        age: '120 lbs'
+      }
+    ]);
 
     return request(app)
       .get('/api/v1/dogs')
       .then(res => {
         const dogsJSON = JSON.parse(JSON.stringify(dog));
         dogsJSON.forEach(dog => {
-          expect(res.body).toContainEqual({ name: dog.name, breed: dog.breed, age: dog.age, _id: dog._id });
+          expect(res.body).toContainEqual({
+            name: dog.name,
+            breed: dog.breed,
+            age: dog.age,
+            _id: dog._id
+          });
         });
       });
   });
 
+  it('can get a dog by id', async() => {
+    const dog = await Dog.create([
+      {
+        name: 'Pennie',
+        breed: 'Doodle',
+        age: '7 lbs'
+      },
+      {
+        name: 'Wynnie',
+        breed: 'Beagle',
+        age: '15 lbs'
+      }
+    ]);
+
+    return request(app)
+      .get(`/api/v1/dogs/${dog[0]._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'Pennie',
+          breed: 'Doodle',
+          age: '7 lbs'
+        });
+      });
+  });
 });
