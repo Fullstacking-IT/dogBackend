@@ -24,14 +24,14 @@ describe('dog routes', () => {
       .send({
         name: 'Pennie',
         breed: 'Doodle',
-        age: '7 lbs'
+        age: '7'
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
           name: 'Pennie',
           breed: 'Doodle',
-          age: '7 lbs',
+          age: '7',
           __v: expect.any(Number)
         });
       });
@@ -42,12 +42,12 @@ describe('dog routes', () => {
       {
         name: 'Pennie',
         breed: 'Doodle',
-        age: '7 lbs'
+        age: '7'
       },
       {
         name: 'Poochie',
         breed: 'Bloodhound',
-        age: '120 lbs'
+        age: '120'
       }
     ]);
 
@@ -71,12 +71,12 @@ describe('dog routes', () => {
       {
         name: 'Pennie',
         breed: 'Doodle',
-        age: '7 lbs'
+        age: '7'
       },
       {
         name: 'Wynnie',
         breed: 'Beagle',
-        age: '15 lbs'
+        age: '15'
       }
     ]);
 
@@ -87,7 +87,7 @@ describe('dog routes', () => {
           _id: expect.any(String),
           name: 'Pennie',
           breed: 'Doodle',
-          age: '7 lbs'
+          age: '7'
         });
       });
   });
